@@ -1,0 +1,26 @@
+# Never commit firmware binaries (copyright) or extracted images
+*.tgz
+*.tar
+*.xz
+*.img
+image
+rootfs/
+fwup.lua
+*.bin
+
+# Secrets / per-site identity
+cookies.txt
+*.pem
+*.key
+*.crt
+*.cert
+*secret*
+*credential*
+PVS.json
+commapp_state.txt
+
+# OS / editor cruft
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
