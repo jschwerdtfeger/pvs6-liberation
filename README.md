@@ -69,16 +69,30 @@ It asks the update server what firmware your unit is offered and prints **only t
 
 ---
 
+## Key findings (so far)
+
+Distilled from offline analysis of the firmware (build 61707) and the live API. Detail in the linked docs.
+
+- **The local API is owner-accessible; the auth lockdown is recent.** Pre-lockdown builds (< 61840) leave the `dl_cgi` commissioning endpoints open; 61840+ (e.g. 61846) gate them behind a cloud-issued installer JWT that **can't be forged offline**. Owner creds (`ssm_owner`) still read live data + ESS state via the varserver on any build. → [build-61707-analysis.md](docs/build-61707-analysis.md)
+- **"6 batteries on 1 inverter" can't commission.** The firmware hard-caps at **4 batteries per inverter** — a common, non-obvious reason a SunVault is stuck after an installer consolidated inverters. → [battery-inverter-cap.md](docs/battery-inverter-cap.md)
+- **Stuck-system errors split cleanly.** A phantom-inverter "can't connect" (30008-class) is PVS-side and fixable by correcting the owned-set; a battery-pack enumeration shortfall (13036-class) is **BMS-internal** (CAN bus) and is *not* a PVS edit. → [build-61707-analysis.md](docs/build-61707-analysis.md)
+- **Downgrades aren't blocked by the old firmware itself.** 61707 has no anti-rollback; any blocker would live in the locked build / U-Boot / eFUSE, cheaply testable on a ~$60 donor. → [downgrade-feasibility.md](docs/downgrade-feasibility.md)
+- **Phone-home is repointable / blockable.** Firmware images are public + unencrypted; cloud endpoints are plaintext config; firmware auto-update can be blocked at the network (don't forget cellular). → [firmware-recon.md](docs/firmware-recon.md), [commissioning-server.md](docs/commissioning-server.md)
+
+---
+
 ## Status
 
 - [x] Local API auth + endpoint map
 - [x] 1-second WebSocket telemetry client
 - [x] Firmware recon: distribution, format, phone-home config locations
 - [x] Modern build (2024 / 61707) pulled + analyzed — auth tiers, topology storage, ESS, recovery path ([docs/build-61707-analysis.md](docs/build-61707-analysis.md))
-- [ ] Verified `-k NONE` modified-image load on 2025.x (donor unit)
+- [x] Topology rule: 4-batteries-per-inverter cap ([docs/battery-inverter-cap.md](docs/battery-inverter-cap.md))
+- [x] Downgrade feasibility: no anti-rollback in 61707 ([docs/downgrade-feasibility.md](docs/downgrade-feasibility.md))
+- [ ] Verified `-k NONE` modified-image load on a donor unit (~$60 bare PVS6)
+- [ ] Local recovery (correct owned-set / re-commission) validated on a live system
 - [ ] Home Assistant package / dashboard
 - [ ] Schneider-native conversion guide
-- [ ] Local commissioning (the hard kernel)
 
 ## Prior art / credits
 
