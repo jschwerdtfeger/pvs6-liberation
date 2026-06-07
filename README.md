@@ -53,6 +53,22 @@ Two sub-paths, documented honestly with their tradeoffs:
 
 ---
 
+## Help wanted: find the current firmware
+
+The docs are built from an older firmware image. To document the **current** build, I need a copy of it — but SunPower's update server only hands out firmware to units that are *behind*, and most up-to-date units (and mine) get offered nothing.
+
+**If your PVS6 is on an older build (before 2025.10 / 61846)**, you can help with a read-only check:
+
+```sh
+./tools/check-fw.sh <YOUR_PVS6_LAN_IP>
+```
+
+It asks the update server what firmware your unit is offered and prints **only the resulting URL**. Share that URL (open an issue or DM) and the image can be pulled and documented for everyone.
+
+> **Do not share your serial number.** The last 5 characters are your PVS6's local-API password. `check-fw.sh` keeps your serial on your machine and never prints it — you only ever share the firmware URL, which contains no serial.
+
+---
+
 ## Status
 
 - [x] Local API auth + endpoint map
