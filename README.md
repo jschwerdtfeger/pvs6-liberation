@@ -74,7 +74,7 @@ It asks the update server what firmware your unit is offered and prints **only t
 - [x] Local API auth + endpoint map
 - [x] 1-second WebSocket telemetry client
 - [x] Firmware recon: distribution, format, phone-home config locations
-- [ ] Current-build (2025.x) image + MQTT/cert config map
+- [x] Modern build (2024 / 61707) pulled + analyzed — auth tiers, topology storage, ESS, recovery path ([docs/build-61707-analysis.md](docs/build-61707-analysis.md))
 - [ ] Verified `-k NONE` modified-image load on 2025.x (donor unit)
 - [ ] Home Assistant package / dashboard
 - [ ] Schneider-native conversion guide
