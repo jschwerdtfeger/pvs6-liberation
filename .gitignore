@@ -19,6 +19,10 @@ cookies.txt
 PVS.json
 commapp_state.txt
 
+# Private notes / responsible-disclosure material (never publish)
+notes/
+*.output
+
 # OS / editor cruft
 .DS_Store
 __pycache__/
